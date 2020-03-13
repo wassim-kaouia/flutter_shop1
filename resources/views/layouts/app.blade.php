@@ -99,7 +99,7 @@
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('users') }}">
-                                    {{ __('Users')}} 
+                                    {{ __('Users test github')}} 
                                 </a>
 
                                  
