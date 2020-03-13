@@ -122,6 +122,9 @@
         </nav>
 
         <main class="py-4">
+            @if (session()->has('status'))
+        <h2 class="alert alert-danger">{{session()->get('status')}}</h2>
+            @endif
             @yield('content')
         </main>
     </div>
