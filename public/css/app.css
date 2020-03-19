@@ -10884,7 +10884,12 @@ a.text-dark:focus {
   }
 }
 
-.checked {
-  color: orange;
+.button-spans {
+  right: 10px;
+  position: absolute;
+}
+
+.button-spans span:first-child {
+  margin-right: 10px;
 }
 

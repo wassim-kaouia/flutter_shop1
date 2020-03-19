@@ -9,8 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,8 +18,22 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {{-- <script>
+        window.onload = function() {
+    if (window.jQuery) {  
+        // jQuery is loaded  
+        alert("Yeah!");
+    } else {
+        // jQuery is not loaded
+        alert("Doesn't Work");
+    }
+}
+    </script> --}}
+
+
 </head>
 <body>
+    
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -99,7 +112,7 @@
                                 </a>
 
                                 <a class="dropdown-item" href="{{ route('users') }}">
-                                    {{ __('Users test github')}} 
+                                    {{ __('Users')}} 
                                 </a>
 
                                  
@@ -122,11 +135,12 @@
         </nav>
 
         <main class="py-4">
-            @if (session()->has('status'))
-        <h2 class="alert alert-danger">{{session()->get('status')}}</h2>
-            @endif
             @yield('content')
         </main>
     </div>
+
+    <!-- Scripts -->
+    <script src="{{ mix('js/app.js') }}"></script>
+    @yield('scripts')
 </body>
 </html>

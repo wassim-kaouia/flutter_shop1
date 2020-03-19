@@ -16,20 +16,58 @@ class UnitController extends Controller
        
        //validate the forms by their names 
        $request->validate([
-           'unit_name' => 'required',
-           'unit_code' => 'required',
+           'unit-name' => 'required',
+           'unit-code' => 'required',
        ]);
     
        $unit = new Unit();
 
-       $unit->unit_name = $request->input('unit_name');
-       $unit->unit_code = $request->input('unit_code');
+       $unit->unit_name = $request->input('unit-name');
+       $unit->unit_code = $request->input('unit-code');
        $unit->save();
 
        $request->session()->flash('status','Unit Added !');
 
-       return redirect()->back();
-
-     
+       return redirect()->back(); 
    }
+
+   public function update(Request $request){
+
+        $request->validate([
+            'unit-name-update' => 'required',
+            'unit-code-update' => 'required',
+        ]);
+        
+        $id = $request->input('edit_id');
+
+        $unit = Unit::findOrFail($id);
+        $unit->unit_name= $request->input('unit-name-update');
+        $unit->unit_code= $request->input('unit-code-update');   
+        $unit->save();
+
+        $request->session()->flash('status','Unit Updated');
+
+        return redirect()->back();
+
+   }
+
+
+   public function delete(Request $request){
+
+         $id = $request->input('delete_id');
+         if(is_null($id) || empty($id)){
+            $request->session()->flash('status','Unit Is Required !');
+            return redirect()->back();
+         }
+
+         $unit = Unit::findOrFail($id);
+        
+        $unit->delete();
+
+        $request->session()->flash('status','Unit Deleted !');
+
+        return redirect()->back(); 
+
+   }
+
 }
