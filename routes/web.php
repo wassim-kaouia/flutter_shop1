@@ -59,13 +59,27 @@ Route::group(['middleware'=>['auth','user_is_admin']], function () {
     Route::post('units','UnitController@store');
     Route::delete('units','UnitController@delete');
     Route::put('units','UnitController@update');
+    Route::get('search-units','UnitController@search')->name('search-units');
+    // Route::get('search-units','UnitController@index');
 
     //categories
     Route::get('categories','CategoryController@index')->name('categories');
+    Route::post('categories','CategoryController@store');
+    Route::delete('categories','CategoryController@delete');
+    Route::put('categories','CategoryController@update');
+    Route::get('search-categories','CategoryController@search')->name('search-categories');
+
     //products
     Route::get('products','ProductController@index')->name('products');
     //tags
     Route::get('tags','TagController@index')->name('tags');
+    Route::post('tags','TagController@store');
+    Route::put('tags','TagController@update');
+    Route::delete('tags','TagController@delete');
+    Route::get('search-tags','TagController@search')->name('search-tags');
+    
+
+
     //shipments
     //payments
     //orders

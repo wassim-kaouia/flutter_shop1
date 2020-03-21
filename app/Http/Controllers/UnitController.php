@@ -10,8 +10,14 @@ class UnitController extends Controller
 {
 
     public function index()
-    {
-        return view('admin.units/units', ['units' => Unit::paginate(env('PAGINATION_COUNT'))]);
+    {    
+        $units = Unit::paginate(env('PAGINATION_COUNT'));
+        $paginationState = true;
+        // dd($units);
+        return view('admin.units.units', [
+            'units' => $units,
+            'pagState' => $paginationState,
+            ]);
     }
     private function unitNameExists($unitName)
     {
@@ -96,6 +102,31 @@ class UnitController extends Controller
 
         return redirect()->back();
 
+    }
+
+
+    public function search(Request $request){
+        // dd($request);
+        $paginationState = false;
+        $request->validate([
+            'unit_search' => 'required',
+        ]);
+
+        $searchTerm = $request->input('unit_search');
+
+        $units = Unit::where('unit_name','like','%'.$searchTerm.'%')
+                   ->orWhere('unit_code','like','%'.$searchTerm.'%')
+                   ->get();//we use paginate because in index action we used the same id name units and we had paginatation
+        // dd($units);
+        if(count($units)>0){
+            return view('admin.units.units')->with([
+                'units' => $units,
+                'pagState' => $paginationState,
+                ]);
+        } 
+      
+        $request->session()->flash('status','This Item Not Found !');
+        return redirect()->route('units');
     }
 
     public function delete(Request $request)
