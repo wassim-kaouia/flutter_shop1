@@ -10886,10 +10886,16 @@ a.text-dark:focus {
 
 .button-spans {
   right: 10px;
+  top: 6px;
   position: absolute;
 }
 
 .button-spans span:first-child {
   margin-right: 10px;
+}
+
+.user-info p {
+  margin-top: 16px;
+  margin-bottom: 1rem;
 }
 

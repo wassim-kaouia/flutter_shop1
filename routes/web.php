@@ -15,36 +15,13 @@ use App\Product;
 |
 */
 
-Route::get('users',function(){
-    return User::with(['billingAddress','shipingAddress'])->paginate(50);
-});
 
-Route::get('images',function(){
-    return Image::with('product')->paginate(50);
-});
-
-Route::get('products',function(){
-    return Product::with(['images','reviews'])->paginate(100);
-});
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-
-Route::get('/test-email',function(){
-    return 'hello wassim';
-})->middleware(['auth','email_verified']);
-
-
-Route::get('/test-admin',function(){
-    return 'hello admin';
-})->middleware(['auth','user_is_admin']);
-
-Route::get('city','CityController@city');
-Route::get('country','CountryController@country');
-Route::get('state','StateController@states');
 
 // don't get access to this Route cause a data duplicate will occure 
 // Route::get('/units-test','DataImportController@import');
@@ -101,5 +78,9 @@ Route::group(['middleware'=>['auth','user_is_admin']], function () {
     Route::get('roles','RoleController@index')->name('roles');
     //users 
     Route::get('users','UserController@index')->name('users');
+    Route::post('users','UserController@store');
+    Route::put('users','UserController@update');
+    Route::delete('users','UserController@delete');
+    Route::get('search-users','UserController@search')->name('search-users');
 
 });

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Role;
+use App\User;
 use App\Order;
 use App\Review;
 use App\Ticket;
@@ -66,6 +67,7 @@ class User extends Authenticatable
     public function roles(){
         return $this->belongsToMany(Role::class);
     }
+ 
 
     public function formattedName(){
         return $this->first_name.' '.$this->last_name;
@@ -75,6 +77,14 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class);
     }
     
+    //this is an event for deleting : we delete a Role when we delete a user
+
+    public static function boot(){
+        parent::boot();
+        static::deleting(function(User $user){
+            $user->roles()->detach($user->id);//this is how we delete many to many related models 
+        });
+    }
 
     /**
      * The attributes that should be hidden for arrays.
